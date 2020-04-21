@@ -12,7 +12,8 @@ exports.getProducts = (req, res) => {
 exports.createProducts = (req, res) => {
     var product = new Products({
         productName: req.body.productName,
-        price: req.body.price
+        price: req.body.price,
+	isDeleted: False
     })
     product.save(function (err, product) {
         if (err) { return next(err) }
