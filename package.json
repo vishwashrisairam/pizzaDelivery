@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.1.0",
+    "express-session": "^1.17.1",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.9",
@@ -27,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node-env-run server --exec nodemon | pino-colada",
-    "dev": "run-p server start"
+    "dev": "nodemon server"
   },
   "eslintConfig": {
     "extends": "react-app"
