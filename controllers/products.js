@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 //const uri = 'localhost:27017/vidzy';
 const Products = require('../models/products');
 
-mongoose.set('useFindAndModify', false);
 
 exports.getProducts = (req, res) => {
     Products.find({ isDeleted: false }, (err, prod) => {
+        console.log(prod)
         if (err) throw err;
 		res.status(200).json(prod);
 		})
@@ -19,6 +19,7 @@ exports.getOneProduct = (req, res) => {
 };
 
 exports.createProducts = (req, res) => {
+    /*
     var product = new Products({
         productName: req.body.productName,
         category: req.body.category,
@@ -29,6 +30,8 @@ exports.createProducts = (req, res) => {
         toppings: req.body.toppings,
 	    isDeleted: false
     })
+    */
+    var product = req.body;
     product.save(function (err, product) {
         if (err) throw err;
         res.status(201).json(product)

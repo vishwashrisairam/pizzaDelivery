@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const mongoose = require('mongoose');
 const session = require('express-session');
-
+var cors = require('cors');
 const app = express();
 //modified to enable request parsing
 app.use(bodyParser.json());
@@ -16,6 +16,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch((err) => console.log(err))
 
+app.use(cors());
 // session 
 app.use(session({
     secret: 'coffee',
@@ -23,6 +24,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
