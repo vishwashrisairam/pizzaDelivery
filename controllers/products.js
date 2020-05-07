@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Products = require('../models/products');
 
 
-exports.getProducts = (req, res) => {
+exports.getProducts = async (req, res) => {
     Products.find({ isDeleted: false }, (err, prod) => {
         console.log(prod)
         if (err) throw err;
@@ -11,16 +11,15 @@ exports.getProducts = (req, res) => {
 		})
 };
 
-exports.getOneProduct = (req, res) => {
+exports.getOneProduct = async(req, res) => {
     Products.find({ _id: req.params.id }, (err, prod) => {
         if (err) throw err;
         res.status(200).json(prod);
 })
 };
 
-exports.createProducts = (req, res) => {
-    /*
-    var product = new Products({
+exports.createProducts =async (req, res) => {
+    /*var product = new Products({
         productName: req.body.productName,
         category: req.body.category,
         description: req.body.description,
@@ -29,9 +28,8 @@ exports.createProducts = (req, res) => {
         crust: req.body.crust,
         toppings: req.body.toppings,
 	    isDeleted: false
-    })
-    */
-    var product = req.body;
+    })*/
+    var product = new Products(req.body);
     product.save(function (err, product) {
         if (err) throw err;
         res.status(201).json(product)
@@ -39,7 +37,7 @@ exports.createProducts = (req, res) => {
     
 };   
 
-exports.updateProducts = (req, res) => {
+exports.updateProducts = async(req, res) => {
     console.log(req.body);
     Products.findByIdAndUpdate(req.params.id, req.body, (err, updated) => {
         if (err) throw err;
@@ -49,7 +47,7 @@ exports.updateProducts = (req, res) => {
     })
 };
 
-exports.deleteProducts = (req, res) => {
+exports.deleteProducts =async (req, res) => {
     Products.findByIdAndUpdate(req.params.id, { isDeleted: true }, (err, updated) => {
         if (err) throw err;
         res.status(200).json({
