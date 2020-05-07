@@ -29,12 +29,17 @@ mongoose.set('useCreateIndex', true);
 
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
+const orderRoutes = require("./routes/order");
+
 
 
 
 app.get("/", (req,res)=> res.send("Backend healthcheck successful"))
 app.use("/api/users",userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/order", orderRoutes);
+
+
 
 
 
