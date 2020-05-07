@@ -5,7 +5,7 @@ router.get("/",(req,res)=> res.send("users page"));
 const {createAccount,authenticateUser,logout,
     getUserProfile,updateUserProfile,
     addAddress,updateAddress,deleteAddress,
-    addPayments,updatePayments,deletePayments}  = require('../controllers/users');
+    addPayments,updatePayments,deletePayments, getAllUsers}  = require('../controllers/users');
 
 // login and logout 
 router.post('/login',authenticateUser);
@@ -14,6 +14,7 @@ router.get('/logout',logout);
 // register 
 router.post('/register', createAccount);
 
+router.get('/users', getAllUsers)
 // get profile details 
 router.get('/user/:id',getUserProfile); 
 
