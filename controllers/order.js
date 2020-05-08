@@ -38,8 +38,10 @@ exports.createOrder = (req, res) => {
 		isCancelled: false
 	})*/
 	var order = new Order(req.body);
+	console.log("request body",req.body);
 	order.save(function (err, order) {
 		if (err) throw err;	
+		console.log("order saved :",order);
 		res.status(201).json(order);
 	})
 };
