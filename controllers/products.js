@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 //const uri = 'localhost:27017/vidzy';
+
+// const upload = require("./upload");
+
+const multer = require('multer')
+const upload = multer({
+    dest:'uploads/'
+});
+
+
 const Products = require('../models/products');
+
+
 
 mongoose.set('useFindAndModify', false);
 
@@ -18,15 +29,16 @@ exports.getOneProduct = (req, res) => {
 })
 };
 
-exports.createProducts = (req, res) => {
+exports.createProducts = async (req, res) => {
     var product = new Products({
         productName: req.body.productName,
         category: req.body.category,
         description: req.body.description,
         price: req.body.price,
-        size: req.body.size,
-        crust: req.body.crust,
-        toppings: req.body.toppings,
+        // size: req.body.size,
+        // crust: req.body.crust,
+        // toppings: req.body.toppings,
+        productImage:req.file.path,
 	    isDeleted: false
     })
     product.save(function (err, product) {
@@ -37,8 +49,26 @@ exports.createProducts = (req, res) => {
 };   
 
 exports.updateProducts = (req, res) => {
-    console.log(req.body);
-    Products.findByIdAndUpdate(req.params.id, req.body, (err, updated) => {
+    
+    let updateObj = {
+        productName: req.body.productName,
+        category: req.body.category,
+        description: req.body.description,
+        price: req.body.price,
+        // size: req.body.size,
+        // crust: req.body.crust,
+        // toppings: req.body.toppings,
+	    isDeleted: false
+    }
+    if(req.file){
+        updateObj={
+            ...updateObj,
+            productImage : req.file.path
+        } 
+    }
+    console.log('uf',updateObj)
+
+    Products.findByIdAndUpdate(req.params.id, updateObj, (err, updated) => {
         if (err) throw err;
         res.status(200).json({
             message: "Product updated successfully"
