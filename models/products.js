@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
     size: String,
     crust: String,
     toppings: String,
+    image: String,
     extra: [
         {
             ingredient: String,

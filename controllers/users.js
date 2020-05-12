@@ -59,6 +59,14 @@ exports.logout = async (req,res) =>{
     }
 }
 
+exports.getAllUsers = async (req, res) => {
+    User.find({}, (err, user) => {
+        console.log(user)
+        if (err) throw err;
+		res.status(200).json(user);
+		})
+};
+
 exports.getUserProfile= async (req,res) =>{
     let userId = req.params.id;
     console.log("user id ",userId);

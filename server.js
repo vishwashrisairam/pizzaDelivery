@@ -4,7 +4,6 @@ const pino = require('express-pino-logger')();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cors = require('cors');
-
 const app = express();
 //modified to enable request parsing
 app.use(bodyParser.json());
@@ -19,6 +18,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch((err) => console.log(err))
 
+app.use(cors());
 // session 
 app.use(session({
     secret: 'coffee',
@@ -26,6 +26,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -39,7 +41,6 @@ app.get("/", (req,res)=> res.send("Backend healthcheck successful"))
 app.use("/api/users",userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/order", orderRoutes);
-
 
 app.listen(3001, () =>
     console.log('Express server is running on localhost:3001')
